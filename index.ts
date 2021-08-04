@@ -5,7 +5,10 @@ enum Fruit {
   KIWI = 'kiwi',
   APPLE = 'apple'
 }
-const fruitBasket = {
+
+type FruitBasket = { [key in Fruit]: number };
+
+const fruitBasket: FruitBasket = {
   banana: 2,
   orange: 3,
   kiwi: 2,
@@ -14,11 +17,16 @@ const fruitBasket = {
 
 // 2. Add typings/access modifiers to the Person class
 class Person {
-  name;
-  gender;
-  age;
-  likes;
-  public constructor(name, gender, age, likes) {
+  private name: string;
+  private gender: string;
+  private age: number;
+  private likes: string[];
+  public constructor(
+    name: string,
+    gender: string,
+    age: number,
+    likes: string[]
+  ) {
     this.name = name;
     this.gender = gender;
     this.age = age;
@@ -38,12 +46,21 @@ class Person {
 const Dima = new Person('Dima', 'male', 22, ['video games', 'martial arts']);
 
 // 3. Add typings/access modifiers to MovieService class
-class MovieService {
-  logger;
-  constructor(logger) {
+
+interface Logger {
+  log: (err: Error) => void;
+}
+
+interface Movies {
+  getMovies: () => Promise<string[]>;
+}
+
+class MovieService implements Movies {
+  private logger: Logger;
+  constructor(logger: Logger) {
     this.logger = logger;
   }
-  public getMovies() {
+  public async getMovies() {
     return Promise.resolve(['Jaws', 'Spider-Man']).catch(err => {
       this.logger.log(err);
       return [];
@@ -51,7 +68,7 @@ class MovieService {
   }
 }
 
-class LoggerOne {
+class LoggerOne implements Logger {
   public log(err: Error) {
     console.log('sending logs to log storage 1', err);
   }
@@ -63,4 +80,6 @@ class LoggerTwo {
 }
 
 const movieService1 = new MovieService(new LoggerOne());
+movieService1.getMovies().then(res => console.log(res));
 const movieService2 = new MovieService(new LoggerTwo());
+movieService2.getMovies().then(res => console.log(res));
