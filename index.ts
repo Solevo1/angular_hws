@@ -1,85 +1,41 @@
-// 1. Add typings/access modifiers to the fruitBasket constant
-enum Fruit {
-  BANANA = 'banana',
-  ORANGE = 'orange',
-  KIWI = 'kiwi',
-  APPLE = 'apple'
-}
+// Build a Mortgage Claculator using Rxjs and calculateMortgage method
 
-type FruitBasket = { [key in Fruit]: number };
+import { fromEvent } from 'rxjs';
+import { calculateMortgage } from './calculate';
 
-const fruitBasket: FruitBasket = {
-  banana: 2,
-  orange: 3,
-  kiwi: 2,
-  apple: 3
+let loanAmount = 0;
+let loanInterest = 0;
+let loanLength = 30;
+
+const insertMortgage = () => {
+  const mort = calculateMortgage(loanInterest, loanAmount, loanLength);
+  if (!Number(mort)) {
+    document.getElementById('result').innerText = 'Please specify all fields';
+  } else {
+    document.getElementById('result').innerText = mort;
+  }
 };
 
-// 2. Add typings/access modifiers to the Person class
-class Person {
-  private name: string;
-  private gender: string;
-  private age: number;
-  private likes: string[];
-  public constructor(
-    name: string,
-    gender: string,
-    age: number,
-    likes: string[]
-  ) {
-    this.name = name;
-    this.gender = gender;
-    this.age = age;
-    this.likes = likes;
-  }
+const subscription1 = fromEvent(
+  document.getElementById('loanAmount'),
+  'change'
+).subscribe(event => {
+  loanAmount = event.target.value;
+  insertMortgage();
+});
 
-  public introduce() {
-    const { name, gender, age, likes } = this;
-    const goodLookingMap = new Map([['male', 'handsome'], ['female', 'cute']]);
-    return `
-      Hello, I'm ${name}, ${age} years old, I like: ${likes.join(', ')}. 
-      As you can see, I'm quite ${goodLookingMap.get(gender)} too!
-    `;
-  }
-}
+const subscription2 = fromEvent(
+  document.getElementById('loanInterest'),
+  'change'
+).subscribe(event => {
+  loanInterest = event.target.value;
+  insertMortgage();
+});
 
-const Dima = new Person('Dima', 'male', 22, ['video games', 'martial arts']);
-
-// 3. Add typings/access modifiers to MovieService class
-
-interface Logger {
-  log: (err: Error) => void;
-}
-
-interface Movies {
-  getMovies: () => Promise<string[]>;
-}
-
-class MovieService implements Movies {
-  private logger: Logger;
-  constructor(logger: Logger) {
-    this.logger = logger;
-  }
-  public async getMovies() {
-    return Promise.resolve(['Jaws', 'Spider-Man']).catch(err => {
-      this.logger.log(err);
-      return [];
-    });
-  }
-}
-
-class LoggerOne implements Logger {
-  public log(err: Error) {
-    console.log('sending logs to log storage 1', err);
-  }
-}
-class LoggerTwo {
-  public log(err: Error) {
-    console.log('sending logs to log storage 2', err);
-  }
-}
-
-const movieService1 = new MovieService(new LoggerOne());
-movieService1.getMovies().then(res => console.log(res));
-const movieService2 = new MovieService(new LoggerTwo());
-movieService2.getMovies().then(res => console.log(res));
+const subscription3 = fromEvent(
+  document.getElementById('loanLength'),
+  'change'
+).subscribe(event => {
+  loanLength = event.target.value;
+  insertMortgage();
+});
