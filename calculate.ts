@@ -1,8 +1,4 @@
-export function calculateMortgage(
-  loanInterest: number,
-  loanAmount: number,
-  loanLength: number
-) {
+export function calculateMortgage(loanInterest, loanAmount, loanLength) {
   const calculatedInterest = (loanInterest * 0.01) / 12;
   const total =
     (loanAmount * calculatedInterest) /
@@ -10,3 +6,4 @@ export function calculateMortgage(
 
   return total.toFixed(2);
 }
+
