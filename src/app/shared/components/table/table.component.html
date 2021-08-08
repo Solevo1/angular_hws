@@ -1,0 +1,19 @@
+<p>{{tableHeader}}</p>
+
+<table>
+  <thead>
+    <tr>
+      <td *ngFor="let columnName of columnNames" class="column-header">
+        {{columnName}}
+      </td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let row of tableData">
+      <td *ngFor="let columnName of columnNames">
+        {{row[columnName]}}
+      </td>
+    </tr>
+  </tbody>
+</table>

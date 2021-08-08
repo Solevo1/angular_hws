@@ -1,0 +1,6 @@
+<lab-js-table
+  *ngIf="users$ | async; let users"
+  tableHeader="Users"
+  [columnNames]="columnNames"
+  [tableData]="users">
+</lab-js-table>

@@ -1,0 +1,6 @@
+<lab-js-table
+  *ngIf="movies$ | async; let movies"
+  tableHeader="Movies"
+  [columnNames]="columnNames"
+  [tableData]="movies">
+</lab-js-table>
