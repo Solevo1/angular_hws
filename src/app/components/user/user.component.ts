@@ -9,12 +9,14 @@ import { User, UserService } from 'src/app/services/user.service';
 })
 export class UserComponent implements OnInit {
   public user$: Observable<User>;
+  public data:User;
   public constructor(
     private readonly userService: UserService,
   ) { }
 
   public ngOnInit(): void {
     this.user$ = this.userService.getCurrentUser$();
+    this.user$.subscribe((val:User) => this.data=val);
   }
 
 }
