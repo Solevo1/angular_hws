@@ -9,14 +9,15 @@ let loanLength = 30;
 
 const insertMortgage = () => {
   const mort = calculateMortgage(loanInterest, loanAmount, loanLength);
+  let result = document.getElementById('result').innerText;
   if (!Number(mort)) {
-    document.getElementById('result').innerText = 'Please specify all fields';
+    result = 'Please specify all fields';
   } else {
-    document.getElementById('result').innerText = mort;
+    result = mort;
   }
 };
 
-const subscription1 = fromEvent(
+fromEvent(
   document.getElementById('loanAmount'),
   'change'
 ).subscribe(event => {
@@ -24,7 +25,7 @@ const subscription1 = fromEvent(
   insertMortgage();
 });
 
-const subscription2 = fromEvent(
+fromEvent(
   document.getElementById('loanInterest'),
   'change'
 ).subscribe(event => {
@@ -32,7 +33,7 @@ const subscription2 = fromEvent(
   insertMortgage();
 });
 
-const subscription3 = fromEvent(
+fromEvent(
   document.getElementById('loanLength'),
   'change'
 ).subscribe(event => {
