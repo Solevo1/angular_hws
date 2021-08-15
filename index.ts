@@ -9,21 +9,27 @@ enum Fruit {
 type FruitBasket = { [key in Fruit]: number };
 
 const fruitBasket: FruitBasket = {
-  banana: 2,
-  orange: 3,
-  kiwi: 2,
-  apple: 3
+  Fruit.BANANA: 2,
+  Fruit.ORANGE: 3,
+  Fruit.KIWI: 2,
+  Fruit.APPLE: 3
 };
 
 // 2. Add typings/access modifiers to the Person class
+
+enum Gender {
+ MALE = 'male',
+ FEMALE = 'female',
+}
+
 class Person {
   private name: string;
-  private gender: string;
+  private gender: Gender;
   private age: number;
   private likes: string[];
   public constructor(
     name: string,
-    gender: string,
+    gender: Gender,
     age: number,
     likes: string[]
   ) {
@@ -43,7 +49,7 @@ class Person {
   }
 }
 
-const Dima = new Person('Dima', 'male', 22, ['video games', 'martial arts']);
+const Dima = new Person('Dima', Gender.MALE , 22, ['video games', 'martial arts']);
 
 // 3. Add typings/access modifiers to MovieService class
 
