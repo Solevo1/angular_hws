@@ -17,7 +17,7 @@ export class PermissionDirective implements OnInit, OnDestroy {
   public ngOnInit() {
     this.subs.add(
       this.permissionService.getCurrentPermissions$()
-        .subscribe((permissions) => {
+        .subscribe((permissions:Permission[]) => {
           if (this.hasPermission(permissions)) {
             this.renderView();
           } else {
@@ -28,6 +28,9 @@ export class PermissionDirective implements OnInit, OnDestroy {
   }
 
   public hasPermission(userPermissions: Permission[]): boolean {
+    if(this.allowedPermissions.some(allowedPermission=>userPermissions.includes(allowedPermission))) {
+      return true;
+    }
     return false;
   }
 
