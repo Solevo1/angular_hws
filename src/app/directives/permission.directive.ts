@@ -28,7 +28,7 @@ export class PermissionDirective implements OnInit, OnDestroy {
   }
 
   public hasPermission(userPermissions: Permission[]): boolean {
-    if(this.allowedPermissions.some(el=>userPermissions.includes(el))) {
+    if(this.allowedPermissions.some(allowedPermission=>userPermissions.includes(allowedPermission))) {
       return true;
     }
     return false;
