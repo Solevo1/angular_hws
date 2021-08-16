@@ -1,0 +1,33 @@
+<form *ngIf="movieForm" [formGroup]="movieForm" (submit)="submit()">
+  <input type="text" formControlName="name" placeholder="Movie Name">
+  <input type="text" formControlName="director" placeholder="Movie Director">
+  <input type="number" formControlName="rating" placeholder="Movie Rating(1-5)">
+  <div>
+    <button type="submit" [disabled]="loading$ | async">Submit</button>
+    <button type="reset">Reset</button>
+  </div>
+</form>
+
+<h1>Movies</h1>
+
+<ng-container *ngIf="{movies: movies$ | async, loading: loading$ | async} as observables">
+  <table *ngIf="observables.movies?.length">
+    <tr>
+      <td>ID</td>
+      <td>Name</td>
+      <td>Director</td>
+      <td>Rating</td>
+      <td></td>
+    </tr>
+    <tr *ngFor="let movie of observables.movies" (click)="setMovie(movie)">
+      <td>{{movie.id}}</td>
+      <td>{{movie.name}}</td>
+      <td>{{movie.director}}</td>
+      <td>{{movie.rating}}</td>
+      <td><button [disabled]="observables.loading" (click)="onRemove($event, movie.id)">Remove</button></td>
+    </tr>
+  </table>
+  <div *ngIf="observables.loading">
+    Loading...
+  </div>
+</ng-container>
