@@ -42,7 +42,8 @@ export class MoviesService extends Store<Movie> {
         delay(1000),
         map(() => this.generateId()),
         tap((id: number) => {
-          //update state here
+          const users = this.state$.getValue();
+          this.setState({entities: {...users.entities, [id]: {...movie, id}} })
         }),
         finalize(() => this.setState({isLoading: false}))
       );
@@ -53,7 +54,8 @@ export class MoviesService extends Store<Movie> {
       .pipe(
         delay(1000),
         tap(() => {
-          //update state here
+          const users = this.state$.getValue();
+          this.setState({entities: {...users.entities, [movie.id]: {...movie}} })
         }),
         finalize(() => this.setState({isLoading: false})),
       );
@@ -64,7 +66,10 @@ export class MoviesService extends Store<Movie> {
       .pipe(
         delay(1000),
         tap(() => {
-          //update state here
+          const users = this.state$.getValue();
+          const newState = {...users.entities};
+          delete newState[movieId]; 
+          this.setState({entities: {...newState} })
         }),
         finalize(() => this.setState({isLoading: false})),
       );
@@ -86,6 +91,7 @@ export class MoviesService extends Store<Movie> {
     ]).pipe(delay(1000));
   }
   private generateId() {
-    return Object.keys(this.state$.getValue().entities).length + 1;
+    const keys = Object.keys(this.state$.getValue().entities);
+    return Number(keys[keys.length-1])+1;
   }
 }
