@@ -1,0 +1,32 @@
+<form *ngIf="familyForm" [formGroup]="familyForm" (submit)="submit()">
+  <input type="text" placeholder="Family Name" formControlName="name">
+
+  <div class="separator"></div>
+
+  <ng-container formGroupName="father">
+    <input type="text" placeholder="Father Name" formControlName="name">
+    <input type="text" placeholder="Father Age" formControlName="age">
+  
+    <div class="separator"></div>
+  </ng-container>
+
+  <ng-container formGroupName="mother">
+    <input type="text" placeholder="Mother Name" formControlName="name">
+    <input type="text" placeholder="Mother Age" formControlName="age">
+  
+    <div class="separator"></div>
+  </ng-container>
+
+  <ng-container formArrayName="children">
+    <ng-container *ngFor="let childControl of children.controls; let i = index" [formGroupName]="i">
+      <input type="text" [placeholder]="'Child #' + (i + 1) + ' Name'" formControlName="name">
+      <input type="text" [placeholder]="'Child #' + (i + 1) + ' Age'" formControlName="age">
+      <button type="button" (click)="removeChild(i)">Remove Child</button>
+  
+      <div class="separator"></div>
+    </ng-container>
+  </ng-container>
+
+  <button type="button" (click)="addChild()">Add Child</button>
+  <button type="submit" [disabled]="!familyForm.valid">Submit</button>
+</form>

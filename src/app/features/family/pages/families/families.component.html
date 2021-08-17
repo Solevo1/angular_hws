@@ -1,0 +1,5 @@
+<p *ngFor="let family of families$ | async">
+  <a [routerLink]="['/families', family.id]">
+    {{ family.name }} Family
+  </a>
+</p>
